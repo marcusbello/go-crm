@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package crm;
+
+option go_package = "github.com/marcusbello/go-crm";
+
+// Represents a unique customer.
+message Customer {
+  // A UUIDv4 for this customer. This can never be set on an AddCustomer().
+  string id = 1;
+  // The name of the customer.
+  string name = 2;
+  // The phone of customer
+  string phone = 3;
+  // The email of customer.
+  string email = 4;
+}
+
+// Add customer request
+message AddCustomersReq {
+  repeated Customer customers = 1;
+}
+
+// Add customer response
+message AddCustomersResp {
+  // Added customer IDs
+  repeated string ids = 1;
+}
+
+// Update customer details
+message UpdateCustomersReq {
+  // customer to update, customer.id must not be empty
+  repeated Customer customers = 1;
+}
+
+// Update customer response
+message UpdateCustomersResp {}
+
+// Delete Customer request
+message DeleteCustomersReq {
+  // IDs of customers to delete
+  repeated string ids = 1;
+}
+
+// Delete customer response
+message DeleteCustomersResp {}
+
+// Search customer request
+message SearchCustomersReq {
+  // filter search with customer names
+  repeated string names = 1;
+}
+
+// CRM service
+service CRM {
+  // Adds customers to the CRM.
+  rpc AddCustomers(AddCustomersReq) returns (AddCustomersResp) {};
+  // Updates customers entries in the CRM.
+  rpc UpdateCustomers(UpdateCustomersReq) returns (UpdateCustomersResp) {};
+  // Deletes customers from the CRM.
+  rpc DeleteCustomers(DeleteCustomersReq) returns (DeleteCustomersResp) {};
+  // Finds customers in the CRM.
+  rpc SearchCustomers(SearchCustomersReq) returns (stream Customer) {};
+}
