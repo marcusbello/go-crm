@@ -3,6 +3,8 @@ module github.com/marcusbello/go-crm
 go 1.20
 
 require (
+	github.com/google/uuid v1.3.0
+	github.com/kylelemons/godebug v1.1.0
 	google.golang.org/grpc v1.56.1
 	google.golang.org/protobuf v1.30.0
 )
