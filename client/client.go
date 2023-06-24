@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/marcusbello/go-crm/internal/server/storage"
-	pb "github.com/marcusbello/go-crm/proto"
+	pb "github.com/marcusbello/go-crm/proto/crm"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 	"io"

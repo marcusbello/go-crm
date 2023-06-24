@@ -2,9 +2,10 @@ package server
 
 import (
 	"context"
+	"errors"
 	"github.com/google/uuid"
 	"github.com/marcusbello/go-crm/internal/server/storage"
-	pb "github.com/marcusbello/go-crm/proto"
+	pb "github.com/marcusbello/go-crm/proto/crm"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/reflection"
@@ -111,8 +112,12 @@ func (a *API) DeleteCustomers(ctx context.Context, req *pb.DeleteCustomersReq) (
 }
 
 // SearchCustomers finds customers in the CRM.
-func (a *API) SearchCustomers(ctx context.Context, req *pb.SearchCustomersReq, stream pb.CRM_SearchCustomersServer) (err error) {
+func (a *API) SearchCustomers(req *pb.SearchCustomersReq, stream pb.CRM_SearchCustomersServer) error {
 	count := 0
+	ctx := context.TODO()
+	if err := validateSearch(ctx, req); err != nil {
+		return status.Error(codes.InvalidArgument, err.Error())
+	}
 
 	ch := a.store.SearchCustomers(ctx, req)
 	for item := range ch {
@@ -126,6 +131,13 @@ func (a *API) SearchCustomers(ctx context.Context, req *pb.SearchCustomersReq, s
 	}
 	if ctx.Err() != nil {
 		return status.Error(codes.DeadlineExceeded, stream.Context().Err().Error())
+	}
+	return nil
+}
+
+func validateSearch(ctx context.Context, r *pb.SearchCustomersReq) error {
+	if len(r.Names) == 0 {
+		return errors.New("input a valid name")
 	}
 	return nil
 }

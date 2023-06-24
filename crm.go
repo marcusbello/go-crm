@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"github.com/marcusbello/go-crm/internal/server"
 	"github.com/marcusbello/go-crm/internal/server/storage/mem"
 	"log"
@@ -24,6 +25,7 @@ func main() {
 		server.WithGRPCOpts(),
 	)
 	if err != nil {
+		fmt.Printf("Unable to start grpc server, err: %v", err)
 		panic(err)
 	}
 

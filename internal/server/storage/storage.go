@@ -3,7 +3,7 @@ package storage
 import (
 	"context"
 	"errors"
-	pb "github.com/marcusbello/go-crm/proto"
+	pb "github.com/marcusbello/go-crm/proto/crm"
 )
 
 // Data represents our data storage.

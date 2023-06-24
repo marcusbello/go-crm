@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/marcusbello/go-crm/internal/server/storage"
-	pb "github.com/marcusbello/go-crm/proto"
+	pb "github.com/marcusbello/go-crm/proto/crm"
 	"sync"
 )
 
